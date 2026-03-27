@@ -1,38 +1,142 @@
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AI System Library</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI System Library — Agents & Skills Catalog</title>
+  <meta name="description" content="Production-ready AI agent and skill packages. Find, preview, and download pre-built components for your AI systems." />
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c6af5'/><text x='16' y='22' text-anchor='middle' font-family='monospace' font-size='16' font-weight='500' fill='white'>AI</text></svg>" />
 </head>
 <body>
 
-<header>
-  <h1>AI System Library</h1>
-  <p>Hazır AI agent ve skill paketlerini indirerek projelerinizi hızla kurun.</p>
+  <!-- ── HEADER ─────────────────────────────────────────────── -->
+  <header>
+    <div class="header-inner">
+      <a class="logo" href="index.html">
+        <div class="logo-mark">AI</div>
+        <span class="logo-text">System<span> Library</span></span>
+      </a>
+      <span class="header-meta">v1.0.0 · Open Catalog</span>
+    </div>
+  </header>
 
-  <div class="filters">
-    <input type="text" id="searchInput" placeholder="Ara...">
-    <select id="categoryFilter">
-      <option value="">Tüm Kategoriler</option>
-    </select>
-    <select id="levelFilter">
-      <option value="">Tüm Seviyeler</option>
-    </select>
-  </div>
-</header>
+  <!-- ── CATALOG VIEW ───────────────────────────────────────── -->
+  <div id="catalog-view">
 
-<main>
-  <section id="assets" class="card-container">
-    <!-- Kartlar JS ile yüklenecek -->
-  </section>
-</main>
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-eyebrow">Open Catalog</div>
+      <h1>Build faster with<br/><em>production AI</em></h1>
+      <p class="hero-sub">
+        Ready-to-deploy agent and skill packages.
+        Designed for real systems, not toy demos.
+      </p>
 
-<footer>
-  <p>&copy; 2026 Ahmet. Tüm hakları saklıdır.</p>
-</footer>
+      <div class="hero-stats">
+        <div>
+          <div class="hero-stat-value" id="stat-total">—</div>
+          <div class="hero-stat-label">Total assets</div>
+        </div>
+        <div>
+          <div class="hero-stat-value" id="stat-agents">—</div>
+          <div class="hero-stat-label">Agents</div>
+        </div>
+        <div>
+          <div class="hero-stat-value" id="stat-skills">—</div>
+          <div class="hero-stat-label">Skills</div>
+        </div>
+        <div>
+          <div class="hero-stat-value" id="stat-downloads">—</div>
+          <div class="hero-stat-label">Downloads</div>
+        </div>
+      </div>
+    </section>
 
-<script src="script.js"></script>
+    <!-- CONTROLS -->
+    <section class="controls-section">
+      <div class="controls">
+        <div class="search-wrap">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input
+            type="search"
+            id="search"
+            placeholder="Search agents, skills, tags…"
+            autocomplete="off"
+            spellcheck="false"
+          />
+        </div>
+
+        <select id="filter-category" class="filter-select" aria-label="Filter by category">
+          <option value="">All categories</option>
+          <option value="agent">Agents</option>
+          <option value="skill">Skills</option>
+        </select>
+
+        <select id="filter-level" class="filter-select" aria-label="Filter by level">
+          <option value="">All levels</option>
+          <option value="beginner">Beginner</option>
+          <option value="intermediate">Intermediate</option>
+          <option value="advanced">Advanced</option>
+        </select>
+
+        <select id="filter-sort" class="filter-select" aria-label="Sort by">
+          <option value="downloads">Most downloaded</option>
+          <option value="newest">Newest</option>
+          <option value="title">A → Z</option>
+        </select>
+
+        <span class="results-count" id="results-count">Loading…</span>
+      </div>
+    </section>
+
+    <!-- GRID -->
+    <section class="catalog">
+      <div class="grid" id="grid">
+        <!-- Cards rendered by JS -->
+        <div class="card" style="opacity:0.3; pointer-events:none;">
+          <div class="card-header">
+            <div class="skeleton" style="width:100px;height:20px;"></div>
+          </div>
+          <div class="skeleton" style="width:70%;height:18px;margin-bottom:12px;"></div>
+          <div class="skeleton" style="height:52px;"></div>
+        </div>
+        <div class="card" style="opacity:0.2; pointer-events:none;">
+          <div class="card-header">
+            <div class="skeleton" style="width:100px;height:20px;"></div>
+          </div>
+          <div class="skeleton" style="width:80%;height:18px;margin-bottom:12px;"></div>
+          <div class="skeleton" style="height:52px;"></div>
+        </div>
+        <div class="card" style="opacity:0.1; pointer-events:none;">
+          <div class="card-header">
+            <div class="skeleton" style="width:100px;height:20px;"></div>
+          </div>
+          <div class="skeleton" style="width:60%;height:18px;margin-bottom:12px;"></div>
+          <div class="skeleton" style="height:52px;"></div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /catalog-view -->
+
+  <!-- ── DETAIL VIEW (injected by JS) ───────────────────────── -->
+  <div id="detail-view" style="display:none;"></div>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-copy">© 2025 AI System Library. Open catalog.</span>
+      <nav class="footer-links">
+        <a href="#">GitHub</a>
+        <a href="#">Docs</a>
+        <a href="#">Submit Asset</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>

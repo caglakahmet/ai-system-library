@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Asset Detail — AI System Library</title>
+  <meta name="description" content="Asset detail page — AI System Library" />
+  <link rel="stylesheet" href="../style.css" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='7' fill='%237c6af5'/><text x='16' y='22' text-anchor='middle' font-family='monospace' font-size='16' font-weight='500' fill='white'>AI</text></svg>" />
+</head>
+<body>
+
+  <!-- ── HEADER ─────────────────────────────────────────────── -->
+  <header>
+    <div class="header-inner">
+      <a class="logo" href="../index.html">
+        <div class="logo-mark">AI</div>
+        <span class="logo-text">System<span> Library</span></span>
+      </a>
+      <span class="header-meta">v1.0.0 · Open Catalog</span>
+    </div>
+  </header>
+
+  <!-- ── DETAIL CONTENT ─────────────────────────────────────── -->
+  <main id="detail-root">
+    <div class="hero" style="padding-top: 48px;">
+      <!-- Loading state -->
+      <div class="skeleton" style="width:200px;height:14px;margin-bottom:48px;border-radius:4px;"></div>
+      <div class="skeleton" style="width:60%;height:44px;margin-bottom:16px;border-radius:6px;"></div>
+      <div class="skeleton" style="width:80%;height:20px;margin-bottom:8px;border-radius:4px;"></div>
+      <div class="skeleton" style="width:50%;height:20px;margin-bottom:40px;border-radius:4px;"></div>
+    </div>
+  </main>
+
+  <!-- ── FOOTER ─────────────────────────────────────────────── -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-copy">© 2025 AI System Library. Open catalog.</span>
+      <nav class="footer-links">
+        <a href="#">GitHub</a>
+        <a href="#">Docs</a>
+        <a href="#">Submit Asset</a>
+      </nav>
+    </div>
+  </footer>
+
+  <script>
+    /* ── standalone asset detail page ── */
+    (async () => {
+      const params = new URLSearchParams(window.location.search);
+      const id = params.get('id');
+
+      if (!id) {
+        window.location.href = '../index.html';
+        return;
+      }
+
+      let assets = [];
+      try {
+        const res = await fetch('../data/assets.json');
+        assets = await res.json();
+      } catch (e) {
+        document.getElementById('detail-root').innerHTML =
+          '<div class="hero"><p style="color:var(--text-muted)">Failed to load asset data.</p></div>';
+        return;
+      }
+
+      const asset = assets.find(a => a.id === id);
+      if (!asset) {
+        document.title = 'Not Found — AI System Library';
+        document.getElementById('detail-root').innerHTML = `
+          <div class="hero" style="padding-top:48px;">
+            <a href="../index.html" class="back-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+              Back to catalog
+            </a>
+            <h1 class="detail-title" style="margin-top:20px;">Asset not found</h1>
+            <p class="detail-desc">No asset with id "<code>${esc(id)}</code>" exists in the catalog.</p>
+          </div>`;
+        return;
+      }
+
+      document.title = `${asset.title} — AI System Library`;
+      document.querySelector('meta[name="description"]').content = asset.description;
+
+      function esc(s) {
+        return String(s||'')
+          .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+          .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+      }
+      function fmtNum(n) {
+        return n >= 1000 ? (n/1000).toFixed(1)+'k' : String(n||0);
+      }
+      function fmtDate(s) {
+        try { return new Date(s).toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric'}); }
+        catch { return s; }
+      }
+
+      document.getElementById('detail-root').innerHTML = `
+        <div class="hero" style="padding-top: 48px;">
+          <a href="../index.html" class="back-btn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Back to catalog
+          </a>
+
+          <div class="detail-layout">
+            <div class="detail-main">
+              <div class="detail-eyebrow">
+                <span class="badge badge-category ${esc(asset.category)}">${esc(asset.category)}</span>
+                <span class="badge badge-level ${esc(asset.level)}">${esc(asset.level)}</span>
+              </div>
+              <h1 class="detail-title">${esc(asset.title)}</h1>
+              <p class="detail-desc">${esc(asset.description)}</p>
+              <div class="detail-long-desc">${esc(asset.longDescription || asset.description)}</div>
+              <div class="detail-tags">
+                ${(asset.tags||[]).map(t=>`<span class="detail-tag">${esc(t)}</span>`).join('')}
+              </div>
+              <div class="files-section">
+                <h3>Included Files</h3>
+                <ul class="file-list">
+                  ${(asset.files||[]).map(f=>`<li class="file-item">${esc(f)}</li>`).join('')}
+                </ul>
+              </div>
+            </div>
+
+            <aside class="detail-sidebar">
+              <div class="sidebar-card">
+                <h3>Asset Details</h3>
+                <div class="sidebar-stat">
+                  <span class="sidebar-stat-label">Version</span>
+                  <span class="sidebar-stat-value">v${esc(asset.version)}</span>
+                </div>
+                <div class="sidebar-stat">
+                  <span class="sidebar-stat-label">Updated</span>
+                  <span class="sidebar-stat-value">${fmtDate(asset.updated)}</span>
+                </div>
+                <div class="sidebar-stat">
+                  <span class="sidebar-stat-label">Author</span>
+                  <span class="sidebar-stat-value">${esc(asset.author)}</span>
+                </div>
+                <div class="sidebar-stat">
+                  <span class="sidebar-stat-label">Downloads</span>
+                  <span class="sidebar-stat-value">${fmtNum(asset.downloads)}</span>
+                </div>
+                <div class="sidebar-stat">
+                  <span class="sidebar-stat-label">Files</span>
+                  <span class="sidebar-stat-value">${(asset.files||[]).length}</span>
+                </div>
+                <a href="${esc(asset.downloadUrl||'#')}" class="btn-download">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                  Download Package
+                </a>
+                <a href="${esc(asset.docsUrl||'#')}" class="btn-docs">
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                  View Docs
+                </a>
+              </div>
+            </aside>
+          </div>
+        </div>
+      `;
+    })();
+  </script>
+
+</body>
+</html>
