@@ -197,21 +197,22 @@ header {
   align-items: center;
   justify-content: center;
   gap: 0;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 12px;
-  padding: 12px 20px;
-  max-width: 720px;
+  padding: 10px 20px;
+  max-width: 860px;
   margin: 0 auto 20px;
   box-shadow: 0 1px 8px rgba(0,0,0,0.04);
+  overflow-x: auto;
 }
 .filter-group {
   display: flex;
   align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  justify-content: center;
+  gap: 6px;
+  flex-shrink: 0;
+  flex-wrap: nowrap;
 }
 .filter-label {
   font-family: var(--font-mono);
@@ -221,18 +222,20 @@ header {
   text-transform: uppercase;
   color: var(--text-dim);
   white-space: nowrap;
+  flex-shrink: 0;
 }
 .filter-divider {
   width: 1px;
   height: 20px;
   background: var(--border);
-  margin: 0 16px;
+  margin: 0 14px;
   flex-shrink: 0;
 }
 .pill-group {
   display: flex;
-  gap: 4px;
-  flex-wrap: wrap;
+  gap: 2px;
+  flex-wrap: nowrap;
+  flex-shrink: 0;
 }
 .pill {
   font-family: var(--font-mono);
@@ -241,10 +244,11 @@ header {
   color: var(--text-muted);
   background: transparent;
   border: 1px solid transparent;
-  padding: 5px 12px;
+  padding: 5px 11px;
   border-radius: 20px;
   transition: all 0.15s;
   white-space: nowrap;
+  flex-shrink: 0;
 }
 .pill:hover {
   color: var(--text);
