@@ -1,0 +1,20 @@
+[
+  {
+    "id": "seo-agent-v1",
+    "title": "SEO Agent System",
+    "description": "SEO odaklı içerik üretim agent sistemi",
+    "category": "SEO",
+    "level": "beginner",
+    "tags": ["seo", "content"],
+    "file": "/assets/seo-agent-v1.zip"
+  },
+  {
+    "id": "ai-blog-kit",
+    "title": "AI Blog Kit",
+    "description": "Blog üretimi için hazır agent + skill seti",
+    "category": "Content",
+    "level": "advanced",
+    "tags": ["blog", "ai"],
+    "file": "/assets/ai-blog-kit.zip"
+  }
+]
