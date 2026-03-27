@@ -204,6 +204,14 @@ header {
   pointer-events: none;
   width: 16px;
   height: 16px;
+  flex-shrink: 0;
+  display: block;
+}
+.search-icon svg,
+.search-icon ~ svg {
+  width: 16px !important;
+  height: 16px !important;
+  display: block;
 }
 #search {
   width: 100%;
