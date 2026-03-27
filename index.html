@@ -15,7 +15,7 @@
 
 <main>
   <section id="assets">
-    <!-- Assetler buraya JS ile yüklenecek -->
+    <!-- Paketler buraya JS ile yüklenecek -->
   </section>
 </main>
 
@@ -23,6 +23,28 @@
   <p>&copy; 2026 Ahmet. Tüm hakları saklıdır.</p>
 </footer>
 
-<script src="script.js"></script>
+<script>
+fetch('./data/assets.json')
+  .then(res => res.json())
+  .then(data => {
+    const container = document.getElementById('assets');
+
+    data.forEach(item => {
+      const div = document.createElement('div');
+      div.className = "asset";
+
+      div.innerHTML = `
+        <h2>${item.title}</h2>
+        <p>${item.description}</p>
+        <p><strong>Kategori:</strong> ${item.category} | <strong>Seviye:</strong> ${item.level}</p>
+        <a href="./pages/asset.html?id=${item.id}">Detay ve indir</a>
+      `;
+
+      container.appendChild(div);
+    });
+  })
+  .catch(err => console.error('Asset yüklenemedi', err));
+</script>
+
 </body>
 </html>
