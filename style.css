@@ -1,11 +1,45 @@
 body {
-  font-family: Arial;
-  max-width: 800px;
+  font-family: Arial, sans-serif;
+  max-width: 900px;
   margin: auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  color: #333;
 }
 
-div {
-  border: 1px solid #ddd;
-  padding: 10px;
+header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+h1 {
   margin-bottom: 10px;
+}
+
+section#assets div.asset {
+  border: 1px solid #ddd;
+  padding: 15px;
+  margin-bottom: 15px;
+  background-color: #fff;
+  border-radius: 8px;
+}
+
+section#assets div.asset h2 {
+  margin-top: 0;
+}
+
+a {
+  color: #0066cc;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+footer {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 0.9em;
+  color: #666;
 }
